@@ -50,7 +50,7 @@ class NewVisitorTest(unittest.TestCase):
             header_text
         )
 
-        # User can make to-do item on index page
+        # User can make to-do item on home page
         input_box = self.browser.find_element_by_id('id_new_item')
         self.assertEqual(
             input_box.get_attribute('placeholder'),
