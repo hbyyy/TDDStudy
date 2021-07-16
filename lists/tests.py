@@ -2,7 +2,7 @@ from django.http import HttpRequest
 from django.test import TestCase
 
 # Create your tests here.
-from django.urls import resolve
+from django.urls import resolve, reverse
 from .views import index
 
 
@@ -13,8 +13,9 @@ class IndexPageTest(TestCase):
         self.assertEqual(found.func, index)
 
     def test_index_returns_correct_html(self):
-        request = HttpRequest()
-        response = index(request)
+        response = self.client.get(reverse('index'))
+        # request = HttpRequest()
+        # response = index(request)
         html = response.content.decode('utf8')
         self.assertTrue(html.startswith('<html>'))
         self.assertIn('<title>To-Do lists</title>', html)
