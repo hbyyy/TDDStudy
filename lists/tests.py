@@ -12,10 +12,34 @@ class HomePageTest(TestCase):
         response = self.client.get(reverse('home'))
         self.assertTemplateUsed(response, 'lists/home.html')
 
+    def test_displays_all_list_items(self):
+        Item.objects.create(text='item 1')
+        Item.objects.create(text='item 2')
+
+        response = self.client.get(reverse('home'))
+
+        self.assertIn('item 1', response.content.decode('utf8'))
+        self.assertIn('item 2', response.content.decode('utf8'))
+
     def test_can_save_a_POST_request(self):
+        # TODO: POST test is too long?
         response = self.client.post(reverse('home'), {'item_text': 'A new list item'})
-        self.assertIn('A new list item', response.content.decode('utf8'))
-        self.assertTemplateUsed(response, 'lists/home.html')
+
+        self.assertEqual(Item.objects.count(), 1)
+        new_item = Item.objects.first()
+        self.assertEqual(new_item.text, 'A new list item')
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response['location'], '/')
+
+    def test_redirect_after_POST(self):
+        response = self.client.post(reverse('home'), {'item_text': 'test redirect item'})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response['location'], '/')
+
+    def test_only_saves_item_when_post(self):
+        self.client.get(reverse('home'))
+        self.assertEqual(Item.objects.count(), 0)
 
 
 class ItemModelTest(TestCase):
