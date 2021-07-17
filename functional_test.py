@@ -29,6 +29,7 @@ from selenium.webdriver.common.keys import Keys
 
 
 class NewVisitorTest(unittest.TestCase):
+    # TODO: clean up database after Functional Testing
     def setUp(self) -> None:
         self.browser = webdriver.Firefox()
 

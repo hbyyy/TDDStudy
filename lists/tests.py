@@ -22,15 +22,11 @@ class HomePageTest(TestCase):
         self.assertIn('item 2', response.content.decode('utf8'))
 
     def test_can_save_a_POST_request(self):
-        # TODO: POST test is too long?
         response = self.client.post(reverse('home'), {'item_text': 'A new list item'})
 
         self.assertEqual(Item.objects.count(), 1)
         new_item = Item.objects.first()
         self.assertEqual(new_item.text, 'A new list item')
-
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response['location'], '/')
 
     def test_redirect_after_POST(self):
         response = self.client.post(reverse('home'), {'item_text': 'test redirect item'})

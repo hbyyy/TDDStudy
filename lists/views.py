@@ -5,8 +5,6 @@ from .models import Item
 
 
 def home_page(request):
-    # TODO: don't save blank items for every request
-    # TODO: Display multiple item in the table (home.html template refactoring)
     # TODO: support more the one list
 
     if request.method == 'POST':
