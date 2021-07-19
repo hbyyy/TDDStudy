@@ -33,7 +33,7 @@ class NewVisitorTest(LiveServerTestCase):
     # TODO: clean up database after Functional Testing
     # TODO: remove time.sleep()
     def setUp(self) -> None:
-        self.browser = webdriver.Firefox()
+        self.browser = webdriver.Chrome()
 
     def tearDown(self) -> None:
         self.browser.quit()
@@ -110,7 +110,7 @@ class NewVisitorTest(LiveServerTestCase):
 
         # New user comes to the site
         self.browser.quit()
-        self.browser = webdriver.Firefox()
+        self.browser = webdriver.Chrome()
 
         # new user visits home page, list is empty
         self.browser.get(self.live_server_url)
