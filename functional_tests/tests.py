@@ -97,8 +97,6 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
         self.assertIn('2: Use peacock feathers to make a fly', [row.text for row in rows])
 
-        self.fail('Finish the test!')
-
     def test_multiple_users_can_start_list_having_different_url(self):
         # user visits URL - user to-do list is still there.
         self.browser.get(self.live_server_url)

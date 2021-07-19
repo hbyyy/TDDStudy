@@ -9,5 +9,10 @@ def home_page(request):
 
     if request.method == 'POST':
         Item.objects.create(text=request.POST.get('item_text'))
-        return redirect('home')
-    return render(request, 'lists/home.html', context={'items': Item.objects.all()})
+        return redirect('/lists/the-only-list/')
+    return render(request, 'lists/home.html')
+
+
+def list_view(request):
+    items = Item.objects.all()
+    return render(request, 'lists/list.html', context={'items': items})
