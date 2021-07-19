@@ -58,5 +58,18 @@
   
   ```
 
-### LiveServerTestCase
+### FT(Functional Test) vs Unit Test
+
+- FT
+  - 사용자 관점에서의 테스트
+  - 예를 들어, 사용자가 접속해 자신의 To-do 리스트가 있는지 확인하고, To-do 항목을 입력하고, Submit 하면 자신의 To-do 항목이 업데이트되는지 일련의 과정을 확인
+  - 새로운 사용자가 접속해 사이트를 이용하는 부분을 테스트
+    - (NewVisitTest)
+- Unit Test
+  - 프로그래머 관점에서, 각각의 기능들을 테스트
+  - 예를 들어
+    -  home_page view에서 POST 시 일어나는 일들을 테스트
+    - home_page view에서 POST 수행 후 정상적으로 리다이렉트 하는지 테스트
+  - 하나의 테스트는 하나의 기능을 담당하도록 지향한다
+    - 완벽하게 1:1 대응하도록 짜기는 어려울 듯 하다.
 

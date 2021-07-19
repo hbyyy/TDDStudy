@@ -1,7 +1,7 @@
 import time
-import unittest
 from django.test import LiveServerTestCase
 from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.keys import Keys
 
 """
@@ -26,6 +26,7 @@ from selenium.webdriver.common.keys import Keys
 
 # Satisfied, she goes back to sleep
 """
+MAX_WAIT = 10
 
 
 class NewVisitorTest(LiveServerTestCase):
@@ -37,10 +38,18 @@ class NewVisitorTest(LiveServerTestCase):
     def tearDown(self) -> None:
         self.browser.quit()
 
-    def check_for_row_in_list_table(self, row_text):
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn(row_text, [row.text for row in rows])
+    def wait_for_row_in_list_table(self, row_text):
+        start_time = time.time()
+        while True:
+            try:
+                table = self.browser.find_element_by_id('id_list_table')
+                rows = table.find_elements_by_tag_name('tr')
+                self.assertIn(row_text, [row.text for row in rows])
+                return
+            except (AssertionError, WebDriverException) as e:
+                if time.time() - start_time > MAX_WAIT:
+                    raise e
+                time.sleep(0.5)
 
     def test_can_start_a_list_and_retrieve_it_later(self):
         # user access the index page
@@ -70,7 +79,7 @@ class NewVisitorTest(LiveServerTestCase):
         # when user hits enter, add to-do item, and page immediately update, and input_box text erase
         input_box.send_keys(Keys.ENTER)
         time.sleep(1)
-        self.check_for_row_in_list_table('1: Buy peacock feathers')
+        self.wait_for_row_in_list_table('1: Buy peacock feathers')
 
         # 2nd to-do item input
         input_box = self.browser.find_element_by_id('id_new_item')
@@ -79,8 +88,8 @@ class NewVisitorTest(LiveServerTestCase):
         time.sleep(1)
 
         # check the table has 1st and 2nd items
-        self.check_for_row_in_list_table('1: Buy peacock feathers')
-        self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
+        self.wait_for_row_in_list_table('1: Buy peacock feathers')
+        self.wait_for_row_in_list_table('2: Use peacock feathers to make a fly')
 
         # '1: Buy peacock feathers' must be in the to-do list
         table = self.browser.find_element_by_id('id_list_table')
