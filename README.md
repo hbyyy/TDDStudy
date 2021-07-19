@@ -70,6 +70,10 @@
   - 예를 들어
     -  home_page view에서 POST 시 일어나는 일들을 테스트
     - home_page view에서 POST 수행 후 정상적으로 리다이렉트 하는지 테스트
-  - 하나의 테스트는 하나의 기능을 담당하도록 지향한다
+  - 하나의 테스트는 하나의 기능을 담당하는 걸 지향한다
     - 완벽하게 1:1 대응하도록 짜기는 어려울 듯 하다.
+
+### TDD Process
+
+![A flowchart showing functional tests as the overall cycle, and unit tests helping to code. Tests passing and failing are marked as green and red respectively.](https://user-images.githubusercontent.com/37058561/126109390-41775654-0230-4b5e-bc4c-32d50018ccdb.png)
 
